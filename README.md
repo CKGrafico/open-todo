@@ -3,7 +3,7 @@ Create a multiplatform (Windows, MacOS, PWA) application with the simples TODO l
 
 ## Requirements
 - [ ] Use Electron
-- [ ] Use React [boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate) for electron
+- [ ] Use React 
 - [ ] Use Localforage
 - [ ] Keep data in Github gists
 - [ ] Use Electron
