@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { Route } from 'react-router-dom';
-import Example from './Example';
+import Todos from './Todos';
 
 export default function () {
   return (
     <Fragment>
-        <Route exact={true} path="/example" component={Example} />
+        <Route exact={true} path="/todos" component={Todos} />
     </Fragment>
   );
 }

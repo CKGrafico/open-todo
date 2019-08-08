@@ -12,16 +12,16 @@
 $color-primary: (
   brightest: null,
   brighter: null,
-  bright: #48DDDD,
-  normal: #06B2B1,
-  dark: #0E2E2E,
+  bright: #4AC598,
+  normal: #23AD7B,
+  dark: #128B6D,
   darker: null,
-  darkest: #06131F
+  darkest: null
 );
 
 $color-secondary: (
-  normal: #FFDD2E,
-  dark: #D1B425,
+  normal: #FF714F,
+  dark: #D85231,
 );
 
 $color-basic: (
@@ -30,8 +30,8 @@ $color-basic: (
   bright: #DADADA,
   normal: null,
   dark: #9C9C9C,
-  darker: #585858,
-  darkest: #131313
+  darker: #384250,
+  darkest: #26303D
 );
 
 // Add all colors to this map
