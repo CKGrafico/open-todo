@@ -1,6 +1,6 @@
 import { Todo } from './todo.model';
 
 export interface ITodosService {
-  get(): Promise<Todo[]>;
+  generate(value: string): Todo;
   add(todo: Todo): Promise<void>;
 }
