@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './todo-list.module.scss';
-import { useTodos } from '../shared';
+import { useTodos, Todo } from '../shared';
 
 export default function () {
   const [todos] = useTodos();
@@ -9,10 +9,18 @@ export default function () {
     console.log(todos);
   }, [todos]);
 
+  function renderList() {
+    return (
+      <ul>
+        {todos.map((x: Todo) => (<li key={x.id}>{x.value}</li>))}
+      </ul>
+    );
+  }
+
   return (
     <div styleName="todo_list">
       List
-      {JSON.stringify(todos)}
+      {renderList()}
     </div>
   );
 }
