@@ -1,10 +1,12 @@
 import { createStore, ReducerType, useStore } from 'react-hookstore';
 import { Todo } from './todo.model';
+import { TodoState } from './todo-state.enum';
 
 const name = 'TODOS';
 
 enum Type {
-  ADD = 'TODOS/ADD'
+  ADD = 'TODOS/ADD',
+  OVERRIDE = 'TODOS/OVERRIDE'
 }
 
 type Payload = {
@@ -20,6 +22,8 @@ const reducers: ReducerType<State, Payload> = function(state: State, { type, pay
   switch (type) {
     case Type.ADD:
       return [ ...state, payload];
+    case Type.OVERRIDE:
+      return [ ...payload ];
     default:
       return { ...state };
   }
