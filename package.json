@@ -5,21 +5,22 @@
   "version": "0.0.1",
   "scripts": {
     "start:web": "craco start",
-    "build": "craco build && electron-build",
-    "test": "npm run test:unit && npm run test:e2e",
+    "build": "craco build && yarn electron-build",
+    "test": "yarn test:unit && yarn test:e2e",
     "test:unit": "craco test",
     "test:e2e:cypress": "cypress run",
     "test:e2e": "start-server-and-test start http-get://localhost:3000 test:e2e:cypress",
-    "lint": "npm run lint:scripts && npm run lint:styles",
+    "lint": "yarn lint:scripts && yarn lint:styles",
     "lint:scripts": "tslint \"./src/**/*.{ts,tsx}\" --format stylish",
     "lint:styles": "stylelint \"./src/**/*.scss\"",
     "electron-build": "electron-builder",
-    "release": "npm run build && electron-builder --publish=always",
-    "start": "concurrently \"cross-env BROWSER=none npm run start:web\" \"wait-on http://localhost:3000 && electron .\""
+    "release": "yarn build && electron-builder --publish=always",
+    "start": "concurrently \"cross-env BROWSER=none yarn start:web\" \"wait-on http://localhost:3000 && electron .\"",
+    "update": "create-react-app-updater"
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint"
+      "pre-push": "yarn lint"
     }
   },
   "dependencies": {
@@ -34,9 +35,7 @@
     "react-hookstore": "^1.2.3",
     "react-i18next": "^10.11.5",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
-    "reflect-metadata": "^0.1.13",
-    "typescript": "3.5.3"
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@craco/craco": "^5.2.4",
@@ -49,6 +48,7 @@
     "babel-plugin-react-css-modules": "^5.2.6",
     "concurrently": "^4.1.1",
     "craco-sass-resources-loader": "^1.1.0",
+    "create-react-app-updater": "^0.7.13",
     "cross-env": "^5.2.0",
     "cypress": "^3.4.1",
     "electron": "^6.0.1",
@@ -57,6 +57,7 @@
     "husky": "^3.0.2",
     "postcss-nested": "^4.1.2",
     "postcss-scss": "^2.0.0",
+    "react-scripts": "3.0.1",
     "start-server-and-test": "^1.9.1",
     "stylelint": "^10.1.0",
     "stylelint-config-standard": "^18.3.0",
@@ -64,6 +65,7 @@
     "stylelint-scss": "^3.9.3",
     "tslint": "^5.18.0",
     "tslint-react": "^4.0.0",
+    "typescript": "3.5.3",
     "wait-on": "^3.3.0"
   },
   "build": {

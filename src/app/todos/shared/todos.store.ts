@@ -28,7 +28,6 @@ const reducers: ReducerType<State, Payload> = function(state: State, { type, pay
 createStore<State, Payload>(name, state, reducers);
 
 export const TodosStoreType = Type;
-export type TodosStoreState = State;
 export const useTodosStore = () => useStore<State, Payload>(name);
 
 
