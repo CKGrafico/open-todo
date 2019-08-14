@@ -10,7 +10,8 @@ export function useTodos() {
   function add(value: string) {
     const todo = todosService.generate(value);
     dispatch({type: TodosStoreType.ADD, payload: todo});
-    // pending async functions to services
+    debugger;
+    todosService.add(todo);
   }
 
   function done(todo: Todo) {
