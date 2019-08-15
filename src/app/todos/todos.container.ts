@@ -1,4 +1,4 @@
-import { container } from 'inversify-props';
+import { container } from 'inversify-hooks';
 import { ITodosService, TodosService } from './shared';
 
 export function todosContainer() {

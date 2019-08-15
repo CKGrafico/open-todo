@@ -6,7 +6,7 @@ const name = 'TODOS';
 
 enum Type {
   ADD = 'TODOS/ADD',
-  OVERRIDE = 'TODOS/OVERRIDE'
+  LOAD = 'TODOS/LOAD'
 }
 
 type Payload = {
@@ -22,7 +22,7 @@ const reducers: ReducerType<State, Payload> = function(state: State, { type, pay
   switch (type) {
     case Type.ADD:
       return [ ...state, payload];
-    case Type.OVERRIDE:
+    case Type.LOAD:
       return [ ...payload ];
     default:
       return { ...state };

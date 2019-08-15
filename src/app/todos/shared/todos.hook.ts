@@ -6,32 +6,26 @@ export function useTodos() {
   const [todos, dispatch] = useTodosStore();
   const todosService = useContainer<ITodosService>(cid.ITodosService);
 
+  async function load() {
+    const todos = await todosService.load();
+    dispatch({type: TodosStoreType.LOAD, payload: todos});
+  }
 
   function add(value: string) {
     const todo = todosService.generate(value);
     dispatch({type: TodosStoreType.ADD, payload: todo});
-    debugger;
     todosService.add(todo);
   }
 
-  function done(todo: Todo) {
-    const updatedTodos = todos.map(x => {
-      if (x.id === todo.id) {
-        x.state = TodoState.Done;
-      }
-
-      return x;
-    });
-
-    dispatch({type: TodosStoreType.OVERRIDE, payload: updatedTodos});
-    // pending async functions to services
+  async function done(todo: Todo) {
+    const updatedTodos = await todosService.done(todos, todo);
+    dispatch({type: TodosStoreType.LOAD, payload: updatedTodos});
   }
 
-  function remove(todo: Todo) {
-    const updatedTodos = todos.filter(x => x.id !== todo.id);
-    dispatch({type: TodosStoreType.OVERRIDE, payload: updatedTodos});
-    // pending async functions to services
+  async function remove(todo: Todo) {
+    const updatedTodos = await todosService.remove(todos, todo);
+    dispatch({type: TodosStoreType.LOAD, payload: updatedTodos});
   }
 
-  return [todos, add, done, remove] as const;
+  return [todos, load, add, done, remove] as const;
 }

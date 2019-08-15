@@ -1,6 +1,8 @@
 import localforage from 'localforage';
+import { injectable } from 'inversify-hooks';
 import { IStorageService } from './istorage.service';
 
+@injectable()
 export class StorageService implements IStorageService {
   public async set<T>(item: T, id: string): Promise<void> {
     try {
