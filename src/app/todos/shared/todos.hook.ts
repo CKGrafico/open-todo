@@ -11,10 +11,10 @@ export function useTodos() {
     dispatch({type: TodosStoreType.LOAD, payload: todos});
   }
 
-  function add(value: string) {
+  async function add(value: string) {
     const todo = todosService.generate(value);
     dispatch({type: TodosStoreType.ADD, payload: todo});
-    todosService.add(todo);
+    await todosService.add(todo);
   }
 
   async function done(todo: Todo) {
