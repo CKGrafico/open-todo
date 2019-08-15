@@ -20,4 +20,13 @@ export class StorageService implements IStorageService {
       throw new Error(`Cannot find in localforage the item ${id}`);
     }
   }
+
+  public async iterate<T>(callback: (value?: any, key?: string) => any): Promise<T> {
+    try {
+      const result = await localforage.iterate(callback);
+      return result as T;
+    } catch (e) {
+      throw new Error(`Cannot iterate in localforage`);
+    }
+  }
 }

@@ -13,18 +13,18 @@ export function useTodos() {
 
   async function add(value: string) {
     const todo = todosService.generate(value);
-    dispatch({type: TodosStoreType.ADD, payload: todo});
     await todosService.add(todo);
+    dispatch({type: TodosStoreType.ADD, payload: todo});
   }
 
   async function done(todo: Todo) {
-    const updatedTodos = await todosService.done(todos, todo);
-    dispatch({type: TodosStoreType.LOAD, payload: updatedTodos});
+    const updatedTodo = await todosService.done(todo);
+    dispatch({type: TodosStoreType.STATE, payload: updatedTodo});
   }
 
   async function remove(todo: Todo) {
-    const updatedTodos = await todosService.remove(todos, todo);
-    dispatch({type: TodosStoreType.LOAD, payload: updatedTodos});
+    // dispatch({type: TodosStoreType.REMOVE, payload: todo});
+    await todosService.remove(todo);
   }
 
   return [todos, load, add, done, remove] as const;

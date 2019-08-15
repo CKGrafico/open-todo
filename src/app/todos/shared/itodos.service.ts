@@ -1,9 +1,9 @@
-import { Todo } from './todo.model';
+import { Todo, TodoCollection } from './todo.model';
 
 export interface ITodosService {
   generate(value: string): Todo;
-  load(): Promise<Todo[]>;
+  load(): Promise<TodoCollection>;
   add(todo: Todo): Promise<void>;
-  done(todos: Todo[], todo: Todo): Promise<Todo[]>;
-  remove(todos: Todo[], todo: Todo): Promise<Todo[]>;
+  done(todo: Todo): Promise<Todo>;
+  remove(todo: Todo): Promise<void>;
 }

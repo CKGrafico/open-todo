@@ -1,12 +1,13 @@
 import { createStore, ReducerType, useStore } from 'react-hookstore';
-import { Todo } from './todo.model';
+import { Todo, TodoCollection } from './todo.model';
 import { TodoState } from './todo-state.enum';
 
 const name = 'TODOS';
 
 enum Type {
+  LOAD = 'TODOS/LOAD',
   ADD = 'TODOS/ADD',
-  LOAD = 'TODOS/LOAD'
+  STATE = 'TODOS/STATE',
 }
 
 type Payload = {
@@ -14,16 +15,22 @@ type Payload = {
   payload: any;
 };
 
-type State = Todo[];
+type State = TodoCollection;
 
 const state: State = [];
 
-const reducers: ReducerType<State, Payload> = function(state: State, { type, payload }) {
+const reducers: ReducerType<State, Payload> = function (state: State, { type, payload }) {
   switch (type) {
     case Type.ADD:
-      return [ ...state, payload];
+      const newTodo = { [payload.id]: payload };
+      return { ...state, ...newTodo };
+    case Type.STATE:
+      const stateTodo = state[payload.id];
+      stateTodo.state = payload.state;
+
+      return { ...state};
     case Type.LOAD:
-      return [ ...payload ];
+      return { ...payload };
     default:
       return { ...state };
   }

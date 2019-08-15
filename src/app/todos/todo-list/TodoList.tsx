@@ -13,7 +13,7 @@ export default function () {
   function renderList() {
     return (
       <ul>
-        {todos.map((x: Todo) => (<TodoDetail key={x.id} todo={x}/>))}
+        {Object.values(todos).map((x: Todo) => (<TodoDetail key={x.id} todo={x}/>))}
       </ul>
     );
   }
