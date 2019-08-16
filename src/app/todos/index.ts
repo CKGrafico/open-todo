@@ -1,2 +1,2 @@
-export * from './TodosRouter';
+export * from './TodosRoutes';
 export * from './todos.container';

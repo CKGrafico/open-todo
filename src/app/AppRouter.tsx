@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { configurationRoutes } from './configuration';
+import { settingsRoutes } from './settings';
 import { todosRoutes } from './todos';
 
 export default function () {
@@ -9,7 +9,7 @@ export default function () {
       <Switch>
         <Route exact={true} path="/" render={() => (<Redirect to="/todos"/>)}/>
         {todosRoutes}
-        {configurationRoutes}
+        {settingsRoutes}
       </Switch>
     </main>
   );
