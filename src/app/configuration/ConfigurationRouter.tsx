@@ -1,11 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
 import Configuration from './Configuration';
 
-export default function () {
-  return (
-    <Fragment>
-        <Route exact={true} path="/configuration" component={Configuration} />
-    </Fragment>
-  );
-}
+export const configurationRoutes = (
+  <Route exact={true} path="/configuration" component={Configuration} />
+);
