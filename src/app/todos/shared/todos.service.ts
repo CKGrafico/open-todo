@@ -1,15 +1,23 @@
-import { IStorageService } from '~/app/shared';
+import { IStorageService, nextTick } from '~/app/shared';
 import { ITodosService } from './itodos.service';
 import { Todo, TodoCollection } from './todo.model';
-import { injectable, Inject } from 'inversify-hooks';
+import { injectable, inject } from 'inversify-hooks';
 import { TodoState } from './todo-state.enum';
 
-// In the futurue make storageservice transient and one collectionper instance
 @injectable()
 export class TodosService implements ITodosService {
-  @Inject() private storageService!: IStorageService;
-
   private storageKey = 'app_todos_';
+
+  @inject() private storageService: IStorageService;
+
+  constructor() {
+    this.initialize();
+  }
+
+  private async initialize(): Promise<void> {
+    await nextTick();
+    this.storageService.initialize(this.storageKey);
+  }
 
   public generate(value: string): Todo {
     return {

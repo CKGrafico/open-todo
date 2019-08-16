@@ -6607,17 +6607,17 @@ invariant@^2.2.2, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-inversify-hooks@^1.3.92:
-  version "1.3.92"
-  resolved "https://registry.yarnpkg.com/inversify-hooks/-/inversify-hooks-1.3.92.tgz#f4e70d96bda6f8873cd6165afc86a67146a89ae2"
-  integrity sha512-PpT0ga1i82O8ifZ8dJ9QQPsn0+XlKkd9xf35aH1QuUc8lfQeOed5NGV48vpHSf8VK9+9ySgX4ofyLaZv9PRftA==
+inversify-hooks@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/inversify-hooks/-/inversify-hooks-1.4.0.tgz#c78c001a3402ce3563c0bdd6aa5d872afa777e27"
+  integrity sha512-XfCb1a+Sy761kx//dVicVc564lp8CKpg0PGCMBtwwMFqnQqhCQj/jn/ehxnXkC9It3E97sRBzr0Y58gRYrojug==
   dependencies:
-    inversify-props "^1.3.92"
+    inversify-props "^1.4.0"
 
-inversify-props@^1.3.92:
-  version "1.3.92"
-  resolved "https://registry.yarnpkg.com/inversify-props/-/inversify-props-1.3.92.tgz#1ef8daa690913f345eb3161217faaa956d1e4483"
-  integrity sha512-dJ3AjH1wAsVBXbntjIgy9m/3Gwt+dswIe7qK0badYeOqQPXXAGYsn3kacO0tPresfbtpmv1aTanxVEGckPcPnw==
+inversify-props@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/inversify-props/-/inversify-props-1.4.0.tgz#4203d405bf3c4be73a42e50e4074b5bf0990c3ed"
+  integrity sha512-RSXsp8GDOcnG2tCQkzKuJpTBbWB1ezkddGxwqmJP7DEtbhiT2odVCz9jk/Qx8F2i6PJ8yK09smjh5glFeDt3nw==
   dependencies:
     inversify "^5.0.1"
     typescript "^3.5.3"
