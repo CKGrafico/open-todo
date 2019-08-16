@@ -4,11 +4,7 @@ import { useTodos, Todo } from '~/app/todos/shared';
 import { TodoDetail } from '~/app/todos/todo-detail';
 
 export default function () {
-  const [todos, loadTodos] = useTodos();
-
-  useEffect(() => {
-    loadTodos();
-  }, []);
+  const [todos] = useTodos();
 
   function renderList() {
     return (

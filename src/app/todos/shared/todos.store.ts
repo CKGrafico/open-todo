@@ -7,6 +7,7 @@ const name = 'TODOS';
 enum Type {
   LOAD = 'TODOS/LOAD',
   ADD = 'TODOS/ADD',
+  REMOVE = 'TODOS/REMOVE',
   STATE = 'TODOS/STATE',
 }
 
@@ -24,11 +25,13 @@ const reducers: ReducerType<State, Payload> = function (state: State, { type, pa
     case Type.ADD:
       const newTodo = { [payload.id]: payload };
       return { ...state, ...newTodo };
+    case Type.REMOVE:
+      delete state[payload.id];
+      return { ...state };
     case Type.STATE:
       const stateTodo = state[payload.id];
       stateTodo.state = payload.state;
-
-      return { ...state};
+      return { ...state };
     case Type.LOAD:
       return { ...payload };
     default:

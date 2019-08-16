@@ -8,7 +8,7 @@ import { TodoState } from './todo-state.enum';
 export class TodosService implements ITodosService {
   private storageKey = 'app_todos_';
 
-  @inject() private storageService: IStorageService;
+  @inject() private storageService: IStorageService<Todo>;
 
   constructor() {
     this.initialize();
@@ -21,7 +21,7 @@ export class TodosService implements ITodosService {
 
   public generate(value: string): Todo {
     return {
-      id: performance.now(),
+      id: Date.now(),
       value,
       state: TodoState.Pending
     };
@@ -35,37 +35,36 @@ export class TodosService implements ITodosService {
   }
 
   public async add(todo: Todo): Promise<void> {
-    this.storageService.set<Todo>(todo, `${this.storageKey}${todo.id}`);
+    await this.storageService.set(todo, `${todo.id}`);
     // save in gist
   }
 
   public async done(todo: Todo): Promise<Todo> {
     const updatedTodo = { ...todo, state: TodoState.Done };
-    this.storageService.set<Todo>(updatedTodo, `${this.storageKey}${todo.id}`);
+    await this.storageService.set(updatedTodo, `${todo.id}`);
     // save in gist
 
     return updatedTodo;
   }
 
   public async remove(todo: Todo): Promise<void> {
-    // const updatedTodos = todos.filter(x => x.id !== todo.id);
-
-    // // save in gist
-    // await this.updateStorage(updatedTodos);
-    // return updatedTodos;
+    await this.storageService.remove(`${todo.id}`);
+    // save in gist
   }
 
   private async loadFromStorage(): Promise<TodoCollection> {
-    let todos: TodoCollection = {};
-    await this.storageService.iterate<TodoCollection>((todo?: any, key?: string) => {
-      if (key && !key.includes(this.storageKey)) {
+    let collection: TodoCollection = {};
+    const list: Todo[] = await this.storageService.getAll();
+
+    list.forEach((todo: Todo) => {
+      if (!todo.id) {
         return;
       }
 
-      todos[todo.id] = todo;
+      collection[todo.id] = todo;
     });
 
-    return todos;
+    return collection;
   }
 
   private sortTodosById(todos: TodoCollection): TodoCollection {

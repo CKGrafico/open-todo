@@ -5,6 +5,6 @@ import { IStorageService, StorageService } from './app/shared';
 import { todosContainer } from './app/todos';
 
 export function containerBuilder() {
-  container.addTransient<IStorageService>(StorageService);
+  container.addTransient<IStorageService<any>>(StorageService);
   todosContainer();
 }

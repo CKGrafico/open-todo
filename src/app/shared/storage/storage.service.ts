@@ -3,7 +3,7 @@ import { injectable } from 'inversify-hooks';
 import { IStorageService } from './istorage.service';
 
 @injectable()
-export class StorageService implements IStorageService {
+export class StorageService<T> implements IStorageService<T> {
   private storage: LocalForage;
 
   public initialize(name: string): void {
@@ -31,12 +31,26 @@ export class StorageService implements IStorageService {
     }
   }
 
-  public async iterate<T>(callback: (value?: any, key?: string) => any): Promise<T> {
+  public async remove(id: string): Promise<void> {
     this.checkInitialized();
 
     try {
-      const result = await this.storage.iterate(callback);
-      return result as T;
+      await this.storage.removeItem(id);
+    } catch (e) {
+      throw new Error(`Cannot remove in localforage the item ${id}`);
+    }
+  }
+
+  public async getAll<T>(): Promise<T[]> {
+    this.checkInitialized();
+
+    try {
+      let items: T[] = [];
+      await this.storage.iterate((value: T) => {
+        items.push(value);
+      });
+
+      return items;
     } catch (e) {
       throw new Error(`Cannot iterate in localforage`);
     }

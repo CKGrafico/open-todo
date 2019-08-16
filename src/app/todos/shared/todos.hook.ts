@@ -1,6 +1,6 @@
 import { useContainer, cid } from 'inversify-hooks';
 import { useTodosStore, TodosStoreType } from './todos.store';
-import { ITodosService, Todo, TodoState } from '.';
+import { ITodosService, Todo } from '.';
 
 export function useTodos() {
   const [todos, dispatch] = useTodosStore();
@@ -23,8 +23,8 @@ export function useTodos() {
   }
 
   async function remove(todo: Todo) {
-    // dispatch({type: TodosStoreType.REMOVE, payload: todo});
     await todosService.remove(todo);
+    dispatch({type: TodosStoreType.REMOVE, payload: todo});
   }
 
   return [todos, load, add, done, remove] as const;
