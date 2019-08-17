@@ -4,11 +4,15 @@ import { ITodosService, Todo } from '.';
 
 export function useTodos() {
   const [todos, dispatch] = useTodosStore();
-  const todosService = useContainer<ITodosService>(cid.ITodosService);
+  const [todosService] = useContainer<ITodosService>(cid.ITodosService);
 
   async function load() {
-    const todos = await todosService.load();
-    dispatch({type: TodosStoreType.LOAD, payload: todos});
+    if (todos) {
+      return;
+    }
+
+    const loadedTodos = await todosService.load();
+    dispatch({type: TodosStoreType.LOAD, payload: loadedTodos});
   }
 
   async function add(value: string) {

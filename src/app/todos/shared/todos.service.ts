@@ -6,8 +6,6 @@ import { TodoState } from './todo-state.enum';
 
 @injectable()
 export class TodosService implements ITodosService {
-  private storageKey = 'app_todos_';
-
   @inject() private storageService: IStorageService<Todo>;
 
   constructor() {
@@ -16,7 +14,7 @@ export class TodosService implements ITodosService {
 
   private async initialize(): Promise<void> {
     await nextTick();
-    this.storageService.initialize(this.storageKey);
+    this.storageService.initialize('todos');
   }
 
   public generate(value: string): Todo {
