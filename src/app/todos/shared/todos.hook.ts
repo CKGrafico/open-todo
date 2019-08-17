@@ -1,16 +1,13 @@
 import { useContainer, cid } from 'inversify-hooks';
 import { useTodosStore, TodosStoreType } from './todos.store';
 import { ITodosService, Todo } from '.';
+import { useEffect } from 'react';
 
 export function useTodos() {
   const [todos, dispatch] = useTodosStore();
   const [todosService] = useContainer<ITodosService>(cid.ITodosService);
 
   async function load() {
-    if (todos) {
-      return;
-    }
-
     const loadedTodos = await todosService.load();
     dispatch({type: TodosStoreType.LOAD, payload: loadedTodos});
   }
@@ -31,5 +28,13 @@ export function useTodos() {
     dispatch({type: TodosStoreType.REMOVE, payload: todo});
   }
 
-  return [todos, load, add, done, remove] as const;
+  useEffect(() => {
+    if (!todosService) {
+      return;
+    }
+
+    load();
+  }, [todosService]);
+
+  return [todos, add, done, remove] as const;
 }

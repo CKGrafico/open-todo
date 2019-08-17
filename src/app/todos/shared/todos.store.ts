@@ -18,7 +18,7 @@ type Payload = {
 
 type State = TodoCollection;
 
-const state: State = [];
+const state: State = {};
 
 const reducers: ReducerType<State, Payload> = function (state: State, { type, payload }) {
   switch (type) {

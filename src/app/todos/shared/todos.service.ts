@@ -1,4 +1,4 @@
-import { IStorageService, nextTick } from '~/app/shared';
+import { IStorageService } from '~/app/shared';
 import { ITodosService } from './itodos.service';
 import { Todo, TodoCollection } from './todo.model';
 import { injectable, inject } from 'inversify-hooks';
@@ -7,15 +7,6 @@ import { TodoState } from './todo-state.enum';
 @injectable()
 export class TodosService implements ITodosService {
   @inject() private storageService: IStorageService<Todo>;
-
-  constructor() {
-    this.initialize();
-  }
-
-  private async initialize(): Promise<void> {
-    await nextTick();
-    this.storageService.initialize('todos');
-  }
 
   public generate(value: string): Todo {
     return {
@@ -26,6 +17,7 @@ export class TodosService implements ITodosService {
   }
 
   public async load(): Promise<TodoCollection> {
+    this.storageService.initialize('todos');
     const todos = await this.loadFromStorage();
     const sorted = this.sortTodosById(todos);
     // get from gist
