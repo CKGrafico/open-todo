@@ -1,4 +1,4 @@
-import { Todo, TodoCollection } from './todo.model';
+import { TodoCollection, Todo } from '~/app/shared';
 
 export interface ITodosService {
   generate(value: string): Todo;

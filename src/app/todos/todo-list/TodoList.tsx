@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './todo-list.module.scss';
-import { useTodos, Todo } from '~/app/todos/shared';
+import { useTodos } from '~/app/todos/shared';
 import { TodoDetail } from '~/app/todos/todo-detail';
+import { Todo } from '~/app/shared';
 
 export default function () {
   const [todos] = useTodos();
@@ -9,7 +10,7 @@ export default function () {
   function renderList() {
     return (
       <ul>
-        {Object.values(todos).map((x: Todo) => (<TodoDetail key={x.id} todo={x}/>))}
+        {todos ? Object.values(todos).map((x: Todo) => (<TodoDetail key={x.id} todo={x}/>)) : ''}
       </ul>
     );
   }

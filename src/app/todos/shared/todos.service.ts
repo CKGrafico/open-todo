@@ -1,8 +1,6 @@
-import { IStorageService } from '~/app/shared';
+import { IStorageService, Todo, TodoState, TodoCollection } from '~/app/shared';
 import { ITodosService } from './itodos.service';
-import { Todo, TodoCollection } from './todo.model';
 import { injectable, inject } from 'inversify-hooks';
-import { TodoState } from './todo-state.enum';
 
 @injectable()
 export class TodosService implements ITodosService {

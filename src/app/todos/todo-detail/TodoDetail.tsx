@@ -1,7 +1,7 @@
-import React, { useState, FormEvent } from 'react';
+import React from 'react';
 import './todo-detail.module.scss';
-import { useTodos, Todo, TodoState } from '../shared';
-import { useTranslation } from 'react-i18next';
+import { Todo, TodoState } from '~/app/shared';
+import { useTodos } from '../shared';
 
 type Props = {
   todo: Todo

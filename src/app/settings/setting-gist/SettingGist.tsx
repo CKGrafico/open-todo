@@ -1,8 +1,8 @@
-import React, { FormEvent, useEffect } from 'react';
-import { useSettingGist } from './setting-gist.hook';
+import React, { FormEvent } from 'react';
+import { useGist } from '~/app/shared';
 
 export default function() {
-  const [gistId, gistToken, setGist, setToken] = useSettingGist();
+  const [gistId, gistToken, setGist, setToken] = useGist();
 
   function onChangeGistId(e: FormEvent<HTMLInputElement>) {
     if (!e || !e.currentTarget) {
