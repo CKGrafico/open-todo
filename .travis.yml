@@ -1,9 +1,17 @@
 # .travis.yml
 language: node_js
+
 node_js:
   - '10'
-script:
+
+  script:
   - yarn build
+
+install:
+  - npm uninstall typescript --no-save
+  - npm uninstall tslint --no-save
+  - yarn
+
 deploy:
   provider: pages
   skip_cleanup: true
