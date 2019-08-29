@@ -1,7 +1,12 @@
 import { IGistService } from './igist.service';
 import { injectable } from 'inversify-hooks';
-import { TodoCollection } from '~/app/shared';
+import { TodoCollection, Todo } from '~/app/shared';
 import { SettingsStoreState } from '~/store';
+import { TodoState } from '../todo';
+
+const FILE_NAME = 'opentodo.md';
+const DONE_SYMBOL = 'X';
+const LIST_ITEM_REGEX = /- \[([X| ])\] (.*) \$%\$ (.*)/gm;
 
 @injectable()
 export class GistService implements IGistService {
@@ -25,7 +30,20 @@ export class GistService implements IGistService {
 
   public async merge(settings: SettingsStoreState, todos: TodoCollection): Promise<TodoCollection> {
     this.checkToken(settings);
-    return todos;
+
+    const response = await fetch(`${this.apiUrl}/${settings.gistId}?access_token=${settings.gistToken}`);
+
+    if (!response.ok) {
+      throw new Error(`Cannot get items from the gist`);
+    }
+
+    const results = await response.json();
+
+    if (!results || !results.files || !results.files[FILE_NAME]) {
+      return todos;
+    }
+
+    return this.deepMerge(results.files[FILE_NAME].content, todos);
   }
 
   private checkToken(settings: SettingsStoreState): void {
@@ -52,8 +70,8 @@ export class GistService implements IGistService {
         "description": "OpenTodo List",
         "public": false,
         "files": {
-          "opentodo.md": {
-            "content": "[ ] Todo"
+          "${FILE_NAME}": {
+            "content": "- [ ] My first Todo"
           }
         }
       }
@@ -69,14 +87,22 @@ export class GistService implements IGistService {
     return results.id;
   }
 
+  private todosToTemplate(todos: TodoCollection): string {
+    const listParts = Object.values(todos).map((todo: Todo) => {
+      return `- [${todo.state === TodoState.Done ? DONE_SYMBOL : ' '}] ${todo.value} $%$ ${todo.id}`;
+    });
+
+    return listParts.join('\\r');
+  }
+
   private async uploadTodos(settings: SettingsStoreState, todos: TodoCollection): Promise<void> {
     const response = await fetch(`${this.apiUrl}/${settings.gistId}?access_token=${settings.gistToken}`, {
       method: 'PATCH',
       body: `
       {
         "files": {
-          "opentodo.md": {
-            "content": "[ ] Updated ${Date.now()}"
+          "${FILE_NAME}": {
+            "content": "${this.todosToTemplate(todos)}"
           }
         }
       }
@@ -86,5 +112,44 @@ export class GistService implements IGistService {
     if (!response.ok) {
       throw new Error(`Cannot update the gist: ${settings.gistId}`);
     }
+  }
+
+  private deepMerge(serverTodosRaw: string, todos: TodoCollection): TodoCollection {
+    const serverTodos = this.extractTodosFromRaw(serverTodosRaw);
+    // TODO: better approach for deleted todos in offline
+    debugger;
+    return {...todos, ...serverTodos};
+  }
+
+  private extractTodosFromRaw(todosRaw: string): TodoCollection {
+    if (!todosRaw) {
+      return {};
+    }
+
+    const todoCollection = {} as TodoCollection;
+    const found = todosRaw.match(LIST_ITEM_REGEX);
+    if (!found || found.length < 1) {
+      return {};
+    }
+
+    found.forEach(part => {
+
+      const result = LIST_ITEM_REGEX.exec(part);
+      LIST_ITEM_REGEX.lastIndex = 0;
+      if (!result || result.length < 1 || !result[1] || !result[2] || !result[3]) {
+        return;
+      }
+
+      const [group, state, value, id] = result;
+      const idn = Number(id);
+
+      todoCollection[idn] = {
+        id: idn,
+        state: state === DONE_SYMBOL ? TodoState.Done : TodoState.Pending,
+        value: value
+      };
+    });
+
+    return todoCollection;
   }
 }

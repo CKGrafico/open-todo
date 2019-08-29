@@ -14,6 +14,7 @@ export function useTodos() {
     const loadedTodos = await todosService.load();
     try {
       const serverAndLocalTodos = await mergeGist(loadedTodos);
+      // TODO: Override localstorage
       dispatch({ type: TodosStoreType.LOAD, payload: serverAndLocalTodos });
     } catch (e) {
       setGistStatus(GistStatus.Error);
