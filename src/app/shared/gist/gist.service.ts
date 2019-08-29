@@ -25,7 +25,7 @@ export class GistService implements IGistService {
     await this.uploadTodos({gistId: id, gistToken: settings.gistToken}, todos);
 
     this.isLoading = false;
-    return id === settings.gistId ? null : id;
+    return id;
   }
 
   public async merge(settings: SettingsStoreState, todos: TodoCollection): Promise<TodoCollection> {

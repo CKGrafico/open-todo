@@ -37,14 +37,16 @@ export function useGist() {
     dispatch({type: SettingsStoreType.GIST_TOKEN, payload: value});
   }
 
-  async function sync(todos: TodoCollection): Promise<void> {
+  async function sync(todos: TodoCollection): Promise<string | null> {
     const id = await gistService.sync(settings, todos);
 
     if (!id) {
-      return;
+      return null;
     }
 
     setGist(id);
+
+    return id;
   }
 
   async function merge(todos: TodoCollection): Promise<TodoCollection> {

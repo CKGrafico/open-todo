@@ -1,6 +1,6 @@
 export enum GistStatus {
   None,
-  Sync,
+  Progress,
   Done,
   Error
 }

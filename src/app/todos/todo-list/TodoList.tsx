@@ -5,7 +5,7 @@ import { TodoDetail } from '~/app/todos/todo-detail';
 import { Todo } from '~/app/shared';
 
 export default function () {
-  const [todos] = useTodos();
+  const [todos, add, done, remove, syncStatus] = useTodos();
 
   function renderList() {
     return (
@@ -17,7 +17,7 @@ export default function () {
 
   return (
     <div styleName="todo_list">
-      List
+      List - {syncStatus}
       {renderList()}
     </div>
   );
