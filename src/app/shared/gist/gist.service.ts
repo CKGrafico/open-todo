@@ -117,7 +117,6 @@ export class GistService implements IGistService {
   private deepMerge(serverTodosRaw: string, todos: TodoCollection): TodoCollection {
     const serverTodos = this.extractTodosFromRaw(serverTodosRaw);
     // TODO: better approach for deleted todos in offline
-    debugger;
     return {...todos, ...serverTodos};
   }
 
