@@ -9,7 +9,6 @@ script:
 
 install:
   - npm uninstall typescript --no-save
-  - npm uninstall tslint --no-save
   - yarn
 
 deploy:
