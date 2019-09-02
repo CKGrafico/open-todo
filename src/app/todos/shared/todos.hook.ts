@@ -2,26 +2,13 @@ import { useContainer, cid } from 'inversify-hooks';
 import { useTodosStore, TodosStoreType } from './todos.store';
 import { ITodosService } from '.';
 import { useEffect, useState } from 'react';
-import { Todo, GistStatus, useGist, nextTick } from '~/app/shared';
+import { Todo, GistStatus, useGist } from '~/app/shared';
 
 export function useTodos() {
+  const [todosService] = useContainer<ITodosService>(cid.ITodosService);
+  const [, gistToken, , , , mergeGist] = useGist();
   const [syncStatus, setSyncStatus] = useState(GistStatus.None);
   const [todos, dispatch] = useTodosStore();
-  const [gistId, gistToken, setGist, setToken, syncGist, mergeGist] = useGist();
-  const [todosService] = useContainer<ITodosService>(cid.ITodosService);
-
-  async function load() {
-    setSyncStatus(GistStatus.Progress);
-    const loadedTodos = await todosService.load();
-    try {
-      const serverAndLocalTodos = await mergeGist(loadedTodos);
-      setSyncStatus(GistStatus.Done);
-      dispatch({ type: TodosStoreType.LOAD, payload: serverAndLocalTodos });
-    } catch (e) {
-      setSyncStatus(GistStatus.Error);
-      dispatch({ type: TodosStoreType.LOAD, payload: loadedTodos });
-    }
-  }
 
   async function add(value: string) {
     const todo = todosService.generate(value);
@@ -50,7 +37,7 @@ export function useTodos() {
       try {
         // TODO: Improve gist states
         // setSyncStatus(GistStatus.Progress);
-        const id = await syncGist(todos);
+        // const id = await syncGist(todos);
         // setSyncStatus(GistStatus.Done);
       } catch (e) {
         debugger;
@@ -59,15 +46,28 @@ export function useTodos() {
     }
 
     sync();
-  }, [todos, gistToken]);
+  }, [todos, gistToken, todosService]);
 
   useEffect(() => {
     if (todos || !todosService) {
       return;
     }
 
+    async function load() {
+      setSyncStatus(GistStatus.Progress);
+      const loadedTodos = await todosService.load();
+      try {
+        const serverAndLocalTodos = await mergeGist(loadedTodos);
+        setSyncStatus(GistStatus.Done);
+        dispatch({ type: TodosStoreType.LOAD, payload: serverAndLocalTodos });
+      } catch (e) {
+        setSyncStatus(GistStatus.Error);
+        dispatch({ type: TodosStoreType.LOAD, payload: loadedTodos });
+      }
+    }
+
     load();
-  }, [gistToken]);
+  }, [gistToken, todosService, setSyncStatus, dispatch, mergeGist, todos]);
 
   return [todos, add, done, remove, syncStatus] as const;
 }

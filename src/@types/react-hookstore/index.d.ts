@@ -17,7 +17,7 @@ declare module 'react-hookstore' {
     state: TState;
     reducer: ReducerType<TState, TPayload>;
     setState: SetStateType<TState> | DispatchType<TState, TPayload>;
-    setters: StateCallback<TState>[]
+    setters: StateCallback<TState>[];
   }
 
   export interface StateStoreInterface<TState> {

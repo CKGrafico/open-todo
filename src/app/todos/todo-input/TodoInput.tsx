@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 export default function () {
   const [t] = useTranslation();
   const [value, setValue] = useState('');
-  const [todos, addTodo] = useTodos();
+  const [, addTodo] = useTodos();
 
   function onClickSave() {
     addTodo(value);

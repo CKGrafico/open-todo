@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useContainer, cid } from 'inversify-hooks';
 import { useSettingsStore, SettingsStoreType } from '~/store';
 import { IStorageService } from '~/app/shared';
@@ -9,23 +9,9 @@ export function useGist() {
   const GIST_ID = 'app_gist';
   const TOKEN_ID = 'app_token';
 
-  const [settings, dispatch] = useSettingsStore();
   const [storageService] = useContainer<IStorageService<string>>(cid.IStorageService);
+  const [settings, dispatch] = useSettingsStore();
   const [gistService] = useContainer<IGistService>(cid.IGistService);
-
-  async function load() {
-    storageService.initialize('gist');
-
-    if (!settings.gistId) {
-      const gist = await storageService.get(GIST_ID) || '';
-      dispatch({type: SettingsStoreType.GIST_ID, payload: gist});
-    }
-
-    if (!settings.gistToken) {
-      const token = await storageService.get(TOKEN_ID) || '';
-      dispatch({type: SettingsStoreType.GIST_TOKEN, payload: token});
-    }
-  }
 
   async function setGist(value: string) {
     await storageService.set(value, GIST_ID);
@@ -53,13 +39,40 @@ export function useGist() {
     return await gistService.merge(settings, todos);
   }
 
+  // Order is important
   useEffect(() => {
     if (!storageService) {
       return;
     }
 
-    load();
+    storageService.initialize('gist');
   }, [storageService]);
+
+  useEffect(() => {
+    if (!storageService || settings.gistId) {
+      return;
+    }
+
+    async function loadGistId() {
+      const gist = await storageService.get(GIST_ID) || '';
+      dispatch({type: SettingsStoreType.GIST_ID, payload: gist});
+    }
+
+    loadGistId();
+  }, [storageService, dispatch, settings.gistId]);
+
+  useEffect(() => {
+    if (!storageService || settings.gistToken) {
+      return;
+    }
+
+    async function loadGistToken() {
+      const token = await storageService.get(TOKEN_ID) || '';
+      dispatch({type: SettingsStoreType.GIST_TOKEN, payload: token});
+    }
+
+    loadGistToken();
+  }, [storageService, dispatch, settings.gistToken]);
 
   return [settings.gistId || '', settings.gistToken || '', setGist, setToken, sync, merge] as const;
 }

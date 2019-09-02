@@ -5,7 +5,7 @@ import { TodoDetail } from '~/app/todos/todo-detail';
 import { Todo } from '~/app/shared';
 
 export default function () {
-  const [todos, add, done, remove, syncStatus] = useTodos();
+  const [todos, , , , syncStatus] = useTodos();
 
   function renderList() {
     return (

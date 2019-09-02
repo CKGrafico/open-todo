@@ -9,7 +9,7 @@ type Props = {
 
 export default function (props: Props) {
   const { todo } = props;
-  const [todos, add, done, remove] = useTodos();
+  const [, , done, remove] = useTodos();
 
   function onClickDone(): void {
     done(todo);

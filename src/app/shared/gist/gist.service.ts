@@ -139,7 +139,7 @@ export class GistService implements IGistService {
         return;
       }
 
-      const [group, state, value, id] = result;
+      const [, state, value, id] = result;
       const idn = Number(id);
 
       todoCollection[idn] = {
