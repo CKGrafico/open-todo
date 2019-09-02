@@ -11230,10 +11230,10 @@ react-error-overlay@^5.1.6:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.6.tgz#0cd73407c5d141f9638ae1e0c63e7b2bf7e9929d"
   integrity sha512-X1Y+0jR47ImDVr54Ab6V9eGk0Hnu7fVWGeHQSOXHf/C2pF9c6uy3gef8QUeuUiWlNb0i08InPSE5a/KJzNzw1Q==
 
-react-hookstore@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/react-hookstore/-/react-hookstore-1.2.3.tgz#a299c7ee9241079507dec89a4e058f55850b508a"
-  integrity sha512-nprwTA6D06W1ctPwglpnitbv07NV1ziI36+vzKKuKdRp5QJuNHoSWA/GGdd1+2jTz+QriiXp+LPcKG6CYm8q/w==
+react-hookstore@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/react-hookstore/-/react-hookstore-1.4.1.tgz#d0ccf62e1c4af2646f1fa63e41841f0e387570fc"
+  integrity sha512-J3RrfO3+94Ohm2nJRlW04QLIz6DCz7wybk9aS06+lozZO+OtPBtWwQYRcIbU8pGzq9IV0rczufl9PCFT18xyfw==
 
 react-i18next@^10.11.5:
   version "10.11.5"
