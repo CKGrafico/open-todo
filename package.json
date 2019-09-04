@@ -33,7 +33,7 @@
     "normalize-scss": "^7.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-hookstore": "^1.4.1",
+    "react-hookstore": "github:/jhonnymichel/react-hookstore",
     "react-i18next": "^10.11.5",
     "react-router-dom": "^5.0.1",
     "reflect-metadata": "^0.1.13"
