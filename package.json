@@ -29,7 +29,7 @@
     "inversify-hooks": "^1.4.4",
     "localforage": "^1.7.3",
     "menubar": "^6.0.7",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "normalize-scss": "^7.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
